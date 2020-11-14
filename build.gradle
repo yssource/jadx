@@ -156,6 +156,16 @@ task dist(dependsOn: [pack, copyExe]) {
 	description = 'Build jadx distribution zip'
 }
 
+task distWin(type: Copy, dependsOn: 'jadx-gui:distWinWithJre') {
+	group 'jadx'
+	description = 'Copy bundle to build dir'
+	destinationDir buildDir
+	from(tasks.getByPath('jadx-gui:distWinWithJre').outputs) {
+		include '*.zip'
+	}
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
 task samples(dependsOn: 'jadx-samples:samples') {
 	group 'jadx'
 }
